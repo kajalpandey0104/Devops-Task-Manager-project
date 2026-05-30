@@ -1,0 +1,58 @@
+# =========================================================================
+# DevOps Task Manager - Docker Ignore Configurations
+# =========================================================================
+# This file specifies which local files and directories must NOT be copied 
+# into the Docker build context. Exclusion minimizes the image size, protects 
+# private credentials, and prevents local workspace files from overwriting 
+# containerized environment files.
+# =========================================================================
+
+# -------------------------------------------------------------------------
+# 1. DEPENDENCIES & RUNTIMES
+# -------------------------------------------------------------------------
+# Local dependencies must never be copied. The Dockerfile performs a clean 
+# 'npm ci' inside the secure Alpine environment to compile architecture-specific binaries.
+node_modules/
+
+# -------------------------------------------------------------------------
+# 2. VERSION CONTROL SYSTEMS
+# -------------------------------------------------------------------------
+# Exclude Git metadata to keep the container lightweight and protect repository history.
+.git/
+.gitignore
+.gitattributes
+
+# -------------------------------------------------------------------------
+# 3. DEBUG & PERFORMANCE LOGS
+# -------------------------------------------------------------------------
+# Prevent runtime diagnostics, error dumps, and local log logs from bloating layers.
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# -------------------------------------------------------------------------
+# 4. ENVIRONMENT VARIABLES & SECRETS
+# -------------------------------------------------------------------------
+# CRITICAL: Prevent local env configurations containing passwords, keys, or secrets
+# from being baked into the public image layer history.
+.env
+.env.*
+.env.local
+
+# -------------------------------------------------------------------------
+# 5. CONTAINERIZATION CONFIGURATIONS
+# -------------------------------------------------------------------------
+# The container runs the built code; it does not need to store its own orchestrator templates.
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# -------------------------------------------------------------------------
+# 6. DEV TOOLING, INTEGRATIONS & OS METADATA
+# -------------------------------------------------------------------------
+# Exclude operating system files and editor-specific cache configurations.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

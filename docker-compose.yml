@@ -1,0 +1,43 @@
+# =========================================================================
+# DevOps Task Manager - Docker Compose Orchestration Setup
+# =========================================================================
+# This file is used to define and run the multi-container Docker application.
+# It handles image building, port forwarding, health checking, and automatic restart policies.
+#
+# Usage:
+#   - Build and start services:  docker compose up --build
+#   - Stop and remove services:   docker compose down
+# =========================================================================
+
+services:
+  # The application service definition
+  app:
+    # Explicit container name for easy identification and log monitoring
+    container_name: devops-task-manager-app
+
+    # Build context configurations
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Environment variables injected into the container's runtime
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+
+    # Port mapping: forwards traffic from Host Port 5000 to Container Port 5000
+    ports:
+      - "5000:5000"
+
+    # High-Availability: Restart container automatically if it crashes or the daemon reboots,
+    # unless explicitly stopped by a developer.
+    restart: unless-stopped
+
+    # Observability & Self-Healing: Health checks allow orchestrators to monitor container viability.
+    # Uses Busybox 'wget' (pre-installed in Alpine) to query the microservice health endpoint.
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5000/health || exit 1"]
+      interval: 30s        # Time between checks
+      timeout: 5s          # Max time to wait for a response
+      retries: 3           # Number of consecutive failures before marking as unhealthy
+      start_period: 10s    # Grace period to allow application server startup before checking

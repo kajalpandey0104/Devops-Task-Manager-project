@@ -1,0 +1,38 @@
+{
+  "//1": "======================= PROJECT SPECIFICATIONS =======================",
+  "name": "devops-task-manager",
+  "version": "1.0.0",
+  "description": "A containerized Node.js and Express microservice optimized for high-availability, structured logging, and robust health diagnostics.",
+  "main": "index.js",
+  "private": true,
+  "author": "Kajal Pandey",
+  "license": "MIT",
+  "keywords": [
+    "devops",
+    "express",
+    "microservice",
+    "docker",
+    "healthcheck",
+    "observability"
+  ],
+
+  "//2": "======================= EXECUTION SCRIPTS =======================",
+  "//scripts-usage": "npm run <script-name> (e.g., 'npm start' to run the production server)",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Info: Testing framework not yet integrated.\" && exit 0"
+  },
+
+  "//3": "======================= RUNTIME CONSTRAINTS =======================",
+  "//engines-usage": "Ensures that developers and CI/CD agents run the microservice under a compatible Node.js environment",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+
+  "//4": "======================= PRODUCTION DEPENDENCIES =======================",
+  "//dependencies-usage": "Third-party libraries required for the runtime execution of the application",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+
